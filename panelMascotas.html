@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Mascotas - PetCare</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Delius&display=swap">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <link rel="icon" type="image/jpg"
+        href="https://github.com/Davis26-art/Pagina_web_Ds_Technology/blob/main/IMG/gato.png?raw=true">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <header>
+        <nav class="navbar navbar-expand-sm" style="background-color: #2badb6;">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white" href="index.html">
+                    <img src="Img/perroPensativo.png" width="75" height="55"> Pet Care
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link text-white" href="index.html">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="services.html">Servicios</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="about.html">Nosotros</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="contact.html">Contacto</a></li>
+                        <li class="nav-item"><a class="btn text-white" href="login.html">Login</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- CONTENIDO -->
+    <main class="container my-5">
+
+        <h1 class="fw-bold titulo-mascotas">Mis Mascotas</h1>
+        <p class="descripcion-login">
+            PetCare es nuestro local donde estamos a completa disposición del cuidado de los animales que tengas.
+        </p>
+
+        <a href="#" class="btn" style="background-color: #2badb6; color: azure;">Nueva Mascota</a>
+
+        <!-- GRID DE MASCOTAS -->
+        <div class="row mt-4 g-4">
+
+            <!-- TARJETA -->
+            <div class="col-md-4">
+                <div class="pet-card p-3 shadow-sm">
+
+                    <img src="Img/osoEstudioso.png" class="pet-img mx-auto d-block">
+
+                    <h5 class="text-center fw-bold mt-2">Teddi</h5>
+
+                    <div class="pet-info row text-center mt-2">
+                        <div class="col">Oso</div>
+                        <div class="col">Grislie</div>
+                        <div class="col">3 añitos</div>
+                    </div>
+
+                    <hr>
+
+                    <button class="btn w-100 mt-2" style="background-color: #2badb6; color: azure;">Ver detalles</button>
+                </div>
+            </div>
+
+            <!-- COPIA LAS TARJETAS SEGÚN NECESITES -->
+            <div class="col-md-4">
+                <div class="pet-card p-3 shadow-sm">
+                    <img src="Img/osoEstudioso.png" class="pet-img mx-auto d-block">
+                    <h5 class="text-center fw-bold mt-2">Teddi</h5>
+                    <div class="pet-info row text-center mt-2">
+                        <div class="col">Oso</div>
+                        <div class="col">Grislie</div>
+                        <div class="col">3 añitos</div>
+                    </div>
+                    <hr>
+                    <button class="btn w-100 mt-2" style="background-color: #2badb6; color: azure;">Ver detalles</button>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="pet-card p-3 shadow-sm">
+                    <img src="Img/osoEstudioso.png" class="pet-img mx-auto d-block">
+                    <h5 class="text-center fw-bold mt-2">Teddi</h5>
+                    <div class="pet-info row text-center mt-2">
+                        <div class="col">Oso</div>
+                        <div class="col">Grislie</div>
+                        <div class="col">3 añitos</div>
+                    </div>
+                    <hr>
+                    <button class="btn w-100 mt-2" style="background-color: #2badb6; color: azure;">Ver detalles</button>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="text-center py-3 text-white footer-pet">
+        © 2025 PeetCare - Derechos Reservados
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

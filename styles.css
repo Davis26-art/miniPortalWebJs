@@ -235,6 +235,30 @@ header {
     font-size: 15px;
 }
 
+.pet-card {
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: white;
+}
+
+.pet-img {
+    width: 180px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.pet-info .col {
+    font-size: 14px;
+    color: #444;
+}
+
+.pet-card hr {
+    margin-top: 8px;
+    color: #888;
+}
+
+
 /* ----------- FOOTER ----------- */
 footer {
     background: #2badb6;
