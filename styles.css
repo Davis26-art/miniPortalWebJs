@@ -207,7 +207,7 @@ header {
 
 /* Tarjeta del equipo */
 .team-card {
-    
+
     border: 1px solid #d3d3d3;
     border-radius: 15px;
     background: white;
@@ -219,6 +219,11 @@ header {
     object-fit: cover;
 }
 
+.card img {
+    border-radius: 6px;
+    margin-bottom: 10px;
+
+}
 
 /* ----------- FOOTER ----------- */
 footer {
