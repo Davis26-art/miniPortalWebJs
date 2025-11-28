@@ -225,6 +225,16 @@ header {
 
 }
 
+.card-login {
+    width: 400px;
+    background: white;
+    border-radius: 8px;
+}
+
+.card-login label {
+    font-size: 15px;
+}
+
 /* ----------- FOOTER ----------- */
 footer {
     background: #2badb6;
