@@ -26,27 +26,32 @@
                     <img src="Img/perroPensativo.png" width="75" height="55"> Pet Care
                 </a>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link text-white" href="index.html">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="services.html">Servicios</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="about.html">Nosotros</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="contact.html">Contacto</a></li>
-                        <li class="nav-item">
-                            <button class="btn text-white" id="btn-abrir-login" type="button">Login</button>
-                        </li>
-                    </ul>
-                </div>
+                <button class="btn btn-light ms-auto" id="btn-volver">Volver al inicio</button>
             </div>
         </nav>
+
     </header>
 
+    <main class="dashboard">
+        <div id="contenido-privado" class="card p-4 shadow-sm" aria-live="polite">
+            <h2>Bienvenido, <span id="usuario-nombre">usuario</span></h2>
+
+            <p id="info-privada" class="p-detalle">
+                Aquí irá la información privada del usuario.
+            </p>
+
+            <p id="email-privado" class="p-detalle"></p>
+
+            <div class="acciones-dashboard mt-3 d-flex gap-3">
+                <button id="btn-logout" class="btn btn-outline-danger w-20">Cerrar sesión</button>
+                <button id="btn-delete" class="btn btn-outline-warning w-20">Eliminar cuenta</button>
+            </div>
+        </div>
+    </main>
+
+
     <!-- CONTENIDO -->
-    <main class="container my-5">
+    <section class="container my-5">
 
         <h1 class="fw-bold titulo-mascotas">Mis Mascotas</h1>
         <p class="descripcion-login">
@@ -111,8 +116,7 @@
             </div>
 
         </div>
-
-    </main>
+    </section>
 
     <!-- FOOTER -->
     <footer class="text-center py-3 text-white footer-pet">
@@ -120,7 +124,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script src="js/panelMascotas.js"></script>
 </body>
 
 </html>
