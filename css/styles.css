@@ -234,3 +234,48 @@ footer {
 .btn-logout:hover {
     background: #c9302c;
 }
+
+.pet-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.pet-img {
+    width: 100%;
+    height: 300px;        /* fijo */
+    object-fit: cover;    /* recorta sin deformar */
+    border-radius: 8px;
+}
+
+.pet-card h5,
+.pet-card .pet-info {
+    flex-shrink: 0;
+}
+
+.pet-card .btn {
+    margin-top: auto;
+}
+
+#snack {
+  visibility: hidden;
+  min-width: 200px;
+  background-color: #2badb6;
+  color: white;
+  text-align: center;
+  border-radius: 5px;
+  padding: 10px;
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity .4s;
+}
+
+#snack.show {
+  visibility: visible;
+  opacity: 1;
+}
