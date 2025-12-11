@@ -64,14 +64,14 @@
 
             <div class="col-md-4">
                 <div class="card service-card p-4 text-center shadow">
-                    <h4>Misión</h4>
+                    <h4 class="fw-bold">Misión</h4>
                     <p>Nosotros damos vacunas para todo tipos de mascotas de hogar</p>
                 </div>
             </div>
 
             <div class="col-md-4">
                 <div class="card service-card p-4 text-center shadow">
-                    <h4>Visión</h4>
+                    <h4 class="fw-bold">Visión</h4>
                     <p>Nosotros damos vacunas para todo tipos de mascotas de hogar</p>
                 </div>
             </div>
@@ -141,7 +141,93 @@
         &copy; 2025 PeetCare - Derechos Reservados
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- ESTADO DEL USUARIO (fuera del modal) -->
+    <div id="estado-usuario" data-estado="login"></div>
+    
+    <!-- ================================
+     MODAL LOGIN / REGISTRO
+     ================================ -->
+    <div class="modal-overlay" id="overlay-auth" aria-hidden="true" data-modal>
+        <div class="modal-auth" role="dialog" aria-modal="true" tabindex="-1">
+
+            <button class="modal-cerrar" data-cerrar>&times;</button>
+
+            <h2 class="modal-title">Acceso a PetCare</h2>
+
+            <nav class="tabs">
+                <button id="tab-login" class="tab activo" data-toggle="login">Login</button>
+                <button id="tab-registro" class="tab" data-toggle="registro">Registro</button>
+            </nav>
+
+            <div class="tab-content">
+
+                <!-- FORM LOGIN -->
+                <form id="form-login" class="formulario" novalidate>
+
+                    <label>
+                        Email o usuario
+                        <input type="text" id="login-iden" autocomplete="username" required
+                            data-feedback="#fb-login-iden">
+                        <span id="fb-login-iden" class="feedback-error"></span>
+                    </label>
+
+                    <label>
+                        Contraseña
+                        <input type="password" id="login-pass" autocomplete="current-password" required
+                            data-feedback="#fb-login-pass">
+                        <span id="fb-login-pass" class="feedback-error"></span>
+                    </label>
+
+                    <button type="submit" class="btn-modal">Entrar</button>
+                </form>
+
+
+                <!-- FORM REGISTRO -->
+                <form id="form-registro" class="formulario oculto" novalidate>
+
+                    <label>
+                        Nombre completo
+                        <input type="text" id="reg-nombre" required data-feedback="#fb-reg-nombre">
+                        <span id="fb-reg-nombre" class="feedback-error"></span>
+                    </label>
+
+                    <label>
+                        Usuario
+                        <input type="text" id="reg-usuario" required data-feedback="#fb-reg-usuario">
+                        <span id="fb-reg-usuario" class="feedback-error"></span>
+                    </label>
+
+                    <label>
+                        Email
+                        <input type="email" id="reg-email" required data-feedback="#fb-reg-email">
+                        <span id="fb-reg-email" class="feedback-error"></span>
+                    </label>
+
+                    <label>
+                        Contraseña
+                        <input type="password" id="reg-pass" required data-feedback="#fb-reg-pass">
+                        <span id="fb-reg-pass" class="feedback-error"></span>
+                    </label>
+
+                    <label>
+                        Confirmar contraseña
+                        <input type="password" id="reg-pass2" required data-feedback="#fb-reg-pass2">
+                        <span id="fb-reg-pass2" class="feedback-error"></span>
+                    </label>
+
+                    <button type="submit" class="btn-modal btn-success">Crear cuenta</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+    <script src="js/login.js"></script>
+
 </body>
 
 </html>
