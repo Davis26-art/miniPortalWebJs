@@ -258,24 +258,21 @@ footer {
 }
 
 #snack {
-  visibility: hidden;
-  min-width: 200px;
-  background-color: #2badb6;
-  color: white;
-  text-align: center;
-  border-radius: 5px;
-  padding: 10px;
   position: fixed;
-  bottom: 30px;
+  bottom: 25px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 9999;
-  font-size: 14px;
+  background: #2badb6;
+  color: white;
+  padding: 12px 22px;
+  border-radius: 8px;
   opacity: 0;
-  transition: opacity .4s;
+  pointer-events: none;
+  transition: opacity .3s ease;
+  z-index: 9999;
+  font-weight: bold;
 }
 
 #snack.show {
-  visibility: visible;
   opacity: 1;
 }
