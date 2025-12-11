@@ -59,23 +59,51 @@
                 <div class="col-md-8">
                     <div class="card p-3 shadow">
                         <h4 class="fw-bold mt-3">Formulario</h4>
-                        <form class="mt-3">
-                            <input type="text" name="inputNombre" id="inputNombre" class="form-control mb-2"
-                                placeholder="Nombre Completo: " required>
-                            <input type="text" name="inputDireccion" id="inputDireccion" class="form-control mb-2"
-                                placeholder="Dirección: " required>
-                            <input type="text" name="inputNumeroTelefono" id="inputNumeroTelefono"
-                                class="form-control mb-2" placeholder="Número de Teléfono: " required>
-                            <input type="email" name="inputEmail" id="inputEmail" class="form-control mb-2"
-                                placeholder="Correo Electrónico: " required>
-                            <textarea name="inputEmail" id="inputEmail" class="form-control mb-2"
-                                placeholder="Mensaje con el asunto por el que nos buscas: " required></textarea>
+                        <form id="form-contacto" class="mt-3" novalidate>
 
-                            <div class="d-flex justify-content-center">
-                                <button type="submit" class="btn "
-                                    style="background: #2badb6; color: azure;">Enviar</button>
+                            <label class="w-100 mb-2">
+                                <input type="text" name="nombre" id="contact-nombre" class="form-control"
+                                    placeholder="Nombre Completo:" required>
+                                <span class="feedback-error" id="fb-contact-nombre"></span>
+                            </label>
+
+                            <label class="w-100 mb-2">
+                                <input type="text" name="direccion" id="contact-direccion" class="form-control"
+                                    placeholder="Dirección:" required>
+                                <span class="feedback-error" id="fb-contact-direccion"></span>
+                            </label>
+
+                            <label class="w-100 mb-2">
+                                <input type="text" name="telefono" id="contact-telefono" class="form-control"
+                                    placeholder="Número de Teléfono:" required>
+                                <span class="feedback-error" id="fb-contact-telefono"></span>
+                            </label>
+
+                            <label class="w-100 mb-2">
+                                <input type="email" name="email" id="contact-email" class="form-control"
+                                    placeholder="Correo Electrónico:" required>
+                                <span class="feedback-error" id="fb-contact-email"></span>
+                            </label>
+
+                            <label class="w-100 mb-2">
+                                <textarea name="mensaje" id="contact-mensaje" class="form-control"
+                                    placeholder="Mensaje o motivo de contacto:" rows="4" required></textarea>
+                                <span class="feedback-error" id="fb-contact-mensaje"></span>
+                            </label>
+
+                            <div class="d-flex justify-content-center gap-3">
+                                <button type="submit" class="btn" style="background: #2badb6; color: white;">
+                                    Enviar
+                                </button>
+
+                                <!-- Botón para limpiar -->
+                                <button type="button" id="btn-limpiar" class="btn btn-warning">
+                                    <i class="bi bi-eraser-fill"></i>
+                                </button>
                             </div>
+
                         </form>
+
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -102,7 +130,7 @@
     <footer class="text-center py-3 text-white">
         &copy; 2025 PeetCare - Derechos Reservados
     </footer>
-    
+
     <!-- ================================
      MODAL LOGIN / REGISTRO
      ================================ -->
@@ -180,12 +208,14 @@
             </div>
         </div>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
 
     <script src="js/login.js"></script>
+
+    <script src="js/contact.js"></script>
 
 </body>
 
