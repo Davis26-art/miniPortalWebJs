@@ -62,23 +62,45 @@ let focoPrevio = null;
 */
 function abrirModalPorId(idOverlay) {
   const overlay = document.getElementById(idOverlay);
-  if (!overlay) return; // Si no existe el overlay, no hacemos nada
+  if (!overlay) return;
 
-  // Guardamos el elemento que tenía el foco antes de abrir (si existe)
+  // Guardar elemento que tenía el foco
   focoPrevio = document.activeElement;
 
-  // Cambiamos aria-hidden a "false" para que el CSS muestre el overlay
+  // Mostrar modal
   overlay.setAttribute("aria-hidden", "false");
-
-  // Buscamos el primer elemento interactivo dentro del modal para enfocar
-  const primerInteractivo = overlay.querySelector(
-    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-  );
-  if (primerInteractivo) primerInteractivo.focus();
-
-  // Bloqueamos el scroll de la página principal mientras el modal está abierto
   document.body.style.overflow = "hidden";
+
+  // === FORZAR LOGIN SIEMPRE ===
+  const tabLogin = document.getElementById("tab-login");
+  const tabRegistro = document.getElementById("tab-registro");
+
+  const formLogin = document.getElementById("form-login");
+  const formRegistro = document.getElementById("form-registro");
+
+  // Tabs: activar login
+  if (tabLogin) tabLogin.classList.add("activo");
+  if (tabRegistro) tabRegistro.classList.remove("activo");
+
+  // Formularios: mostrar login y ocultar registro
+  if (formLogin) formLogin.classList.remove("oculto");
+  if (formRegistro) formRegistro.classList.add("oculto");
+
+  // Resetear formularios
+  if (formLogin) formLogin.reset();
+  if (formRegistro) formRegistro.reset();
+
+  // Limpiar mensajes de error
+  document.querySelectorAll(".feedback-error").forEach((span) => {
+    span.textContent = "";
+  });
+
+  // Foco en primer input del login
+  const primerInput = formLogin.querySelector("input");
+  if (primerInput) primerInput.focus();
 }
+
+
 
 /*
   cerrarModal(overlay)
@@ -96,6 +118,17 @@ function cerrarModal(overlay) {
 
   // Quitamos la restricción de scroll
   document.body.style.overflow = "";
+
+  // Reinicia los formularios al cerrar el modal (limpia inputs y errores)
+  const formLoginEl = qs("#form-login");
+  const formRegistroEl = qs("#form-registro");
+
+  if (formLoginEl) formLoginEl.reset();
+  if (formRegistroEl) formRegistroEl.reset();
+
+  // Borrar mensajes de error
+  qsa(".feedback-error").forEach((span) => (span.textContent = ""));
+
 }
 
 /*
