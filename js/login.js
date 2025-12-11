@@ -6,7 +6,7 @@
    - Implementa un formulario de registro y otro de login guardando usuarios
      en localStorage (simulando una base de datos pequeña en el navegador).
    - Gestiona la "sesión" del usuario guardando un objeto en sessionStorage.
-   - Al iniciar sesión o registrarse correctamente redirige al `dashboard.html`.
+   - Al iniciar sesión o registrarse correctamente redirige al `panelMascotas.html`.
 
    IMPORTANTE:
    - Esto es solo para DEMOSTRACIÓN y aprendizaje. NO se debe usar la 
@@ -270,7 +270,7 @@ function mostrarErrorEnCampo(idFeedback, mensaje) {
     * crea un objeto nuevo de usuario
     * lo guarda en localStorage
     * inicia una "sesión" (sessionStorage)
-    * redirige al dashboard
+    * redirige al panelMascotas
 */
 function manejarRegistroForm(e) {
   e.preventDefault(); // Evitamos que el formulario haga submit tradicional y recargue la página
@@ -346,8 +346,8 @@ function manejarRegistroForm(e) {
     JSON.stringify({ userId: nuevo.id, username: nuevo.username })
   );
 
-  // Redirigimos al dashboard; usamos replace para que el botón "atrás" no vuelva aquí
-  location.replace("dashboard.html");
+  // Redirigimos al panelMascotas; usamos replace para que el botón "atrás" no vuelva aquí
+  location.replace("panelMascotas.html");
 }
 
 /* -------------------- Manejar el formulario de login -------------------- */
@@ -356,7 +356,7 @@ function manejarRegistroForm(e) {
   manejarLoginForm(e)
   - Handler para submit del formulario de login.
   - Valida campos, busca el usuario por email o username y compara contraseña.
-  - Si todo ok, guarda la sesión y dirige al dashboard.
+  - Si todo ok, guarda la sesión y dirige al panelMascotas.
 */
 function manejarLoginForm(e) {
   e.preventDefault();
@@ -405,8 +405,8 @@ function manejarLoginForm(e) {
     })
   );
 
-  // Redirigimos al dashboard
-  location.replace("dashboard.html");
+  // Redirigimos al panelMascotas.
+  location.replace("panelMascotas.html");
 }
 
 /* ---------- Inicialización: conectar todo al DOM y eventos ---------- */
@@ -424,17 +424,11 @@ function manejarLoginForm(e) {
 function iniciarDemo() {
   // 1) Preparamos los modales (abrir/cerrar/escape/focus-trap)
   inicializarModales();
-  // Abrir modal desde el botón del navbar
-  const btnAbrirLogin = qs("#btn-abrir-login");
-  btnAbrirLogin.addEventListener("click", () => abrirModalPorId("overlay-auth"));
 
 
   // 2) Botones que abren los modales (los obtuvimos en el HTML)
   qs("#btn-abrir-login").addEventListener("click", () =>
     abrirModalPorId("overlay-auth")
-  );
-  qs("#btn-abrir-info").addEventListener("click", () =>
-    abrirModalPorId("overlay-info")
   );
 
   // 3) Tabs dentro del modal de auth: cambiamos entre Login y Registro
@@ -456,9 +450,37 @@ function iniciarDemo() {
     });
   });
 
-  // 4) Conectamos los formularios a sus funciones manejadoras
-  qs("#form-registro").addEventListener("submit", manejarRegistroForm);
-  qs("#form-login").addEventListener("submit", manejarLoginForm);
+  // 4) Conectamos los formularios a sus funciones manejadoras.
+  //    Además validamos que existan antes de asignar eventos (evita errores
+  //    si este script se usa en otra página que no tiene los formularios).
+
+  const formRegistro = qs("#form-registro");
+  const formLogin = qs("#form-login");
+
+  // Si existe el form de registro → conectarlo
+  if (formRegistro) {
+    formRegistro.addEventListener("submit", manejarRegistroForm);
+
+    qsa("#form-registro input").forEach((input) => {
+      input.addEventListener("input", () => {
+        const fb = input.dataset.feedback;
+        if (fb) mostrarErrorEnCampo(fb, "");
+      });
+    });
+  }
+
+  // Si existe el form de login → conectarlo
+  if (formLogin) {
+    formLogin.addEventListener("submit", manejarLoginForm);
+
+    qsa("#form-login input").forEach((input) => {
+      input.addEventListener("input", () => {
+        const fb = input.dataset.feedback;
+        if (fb) mostrarErrorEnCampo(fb, "");
+      });
+    });
+  }
+
 
   // 5) Si hay botones con [data-cerrar] en el DOM, los conectamos para cerrar el modal
   qsa("[data-cerrar]").forEach((b) =>
