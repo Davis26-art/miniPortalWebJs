@@ -1,4 +1,4 @@
-/* ----------- RESET ----------- */
+/* ========== RESET GENERAL ========== */
 * {
     margin: 0;
     padding: 0;
@@ -12,202 +12,37 @@ body {
     min-height: 100vh;
 }
 
-/* ----------- HEADER ----------- */
+/* ========== HEADER ========== */
 header {
     background: #2badb6;
     color: white;
     text-align: center;
-    padding: 10px 10px;
+    padding: 10px;
 }
 
-/* Colores */
 .bg-teal {
     background-color: #2bb3ad;
 }
 
-/* Hero */
+/* ========== HERO ========== */
 .hero img {
     height: 300px;
     object-fit: cover;
 }
 
-/* Caja de bienvenida */
-.welcome-box {
-    background: #5a5a5a;
-    color: white;
-    border-radius: 10px;
-    max-width: 600px;
-}
-
-/* Tarjetas */
+/* ========== TARJETAS DE SERVICIO ========== */
 .service-card {
     border: 1px solid #d6d6d6;
     border-radius: 15px;
-    transition: transform .2s;
+    transition: transform .2s ease;
 }
 
 .service-card:hover {
     transform: translateY(-5px);
 }
 
-/* .subtitulo {
-    font-size: 1.1rem;
-    opacity: 0.9;
-} */
-
-/* ----------- INTRO ----------- */
-/* .intro {
-    text-align: center;
-    padding: 25px;
-    margin: 20px auto;
-    max-width: 800px;
-    background: white;
-    border-radius: 15px;
-    border: none;
-    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
-} */
-
-/* ----------- TARJETAS ----------- */
-/* .animal-container {
-    max-width: 1100px;
-    margin: 20px auto;
-    padding: 10px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 25px;
-}
-
-.animal-card {
-    background: white;
-    padding: 15px;
-    border-radius: 12px;
-    border: none solid #3e65ff;
-    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
-    text-align: center;
-}
-
-.animal-card:hover {
-    transform: translateY(-5px);
-    transition: 0.3s ease;
-}
-
-
-.animal-card img {
-    width: 100%;
-    height: 165px;
-    border-radius: 12px;
-    object-fit: cover;
-    margin-bottom: 15px;
-}
-
-.animal-card h3 {
-    font-size: 1.4rem;
-    margin-bottom: 10px;
-}
-
-.animal-card p {
-    font-size: 0.95rem;
-    color: #333;
-} */
-
-/* ----------- BOTÓN SUSCRIPCIÓN ----------- */
-/* .centrado {
-    display: flex;
-    justify-content: center;
-    margin: 25px 0;
-}
-
-.btn-open {
-    padding: 12px 30px;
-    background: #3e65ff;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    cursor: pointer;
-    font-weight: bold;
-} */
-
-/* ----------- MODAL ----------- */
-.modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 350px;
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    border: none;
-    z-index: 10;
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.modal-img {
-    width: 100%;
-    border-radius: 10px;
-    margin: 10px 0 15px;
-}
-
-.modal-text {
-    text-align: center;
-    font-size: 1rem;
-    color: #444;
-    margin-bottom: 15px;
-}
-
-
-.modal input {
-    width: 100%;
-    padding: 10px;
-    margin: 15px 0;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-}
-
-/* .btn {
-    width: 100%;
-    padding: 12px;
-    background: #3e65ff;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.btn-close {
-    background: #ff4d4d;
-    border: none;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.4);
-    backdrop-filter: blur(2px);
-    z-index: 5;
-} */
-
-/* .hidden {
-    display: none;
-} */
-
-/* Tarjeta del equipo */
+/* ========== TARJETAS DEL EQUIPO / ANIMALES / INFO GENERAL ========== */
 .team-card {
-
     border: 1px solid #d3d3d3;
     border-radius: 15px;
     background: white;
@@ -222,17 +57,6 @@ header {
 .card img {
     border-radius: 6px;
     margin-bottom: 10px;
-
-}
-
-.card-login {
-    width: 400px;
-    background: white;
-    border-radius: 8px;
-}
-
-.card-login label {
-    font-size: 15px;
 }
 
 .pet-card {
@@ -258,8 +82,7 @@ header {
     color: #888;
 }
 
-
-/* ----------- FOOTER ----------- */
+/* ========== FOOTER ========== */
 footer {
     background: #2badb6;
     text-align: center;
@@ -268,9 +91,9 @@ footer {
     color: #ffffff;
 }
 
-/* ============================
-   MODAL LOGIN REGISTRO PETCARE
-   ============================ */
+/* ==========================================
+   ========== MODAL LOGIN / REGISTRO ==========
+   ========================================== */
 
 .modal-overlay {
     position: fixed;
@@ -339,6 +162,7 @@ footer {
     border-bottom: 2px solid #2badb6;
 }
 
+/* Formulario */
 .formulario label {
     display: block;
     margin-bottom: 12px;
@@ -354,6 +178,7 @@ footer {
     margin-top: 5px;
 }
 
+/* Botón Modal */
 .btn-modal {
     width: 100%;
     background: #2badb6;
@@ -370,10 +195,12 @@ footer {
     background: #24989f;
 }
 
+/* Ocultar formularios */
 .oculto {
     display: none;
 }
 
+/* Errores */
 .feedback-error {
     color: #d9534f;
     font-size: 13px;
@@ -381,31 +208,29 @@ footer {
     display: block;
 }
 
-.btn-logout {
-    background: #d9534f;       /* rojo suave */
-    color: white;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    font-weight: bold;
-    transition: background .2s ease;
-}
-
-.btn-logout:hover {
-    background: #c9302c;       /* rojo un poco más oscuro */
-}
+/* ========== ESTADO DE USUARIO / LOGOUT ========== */
 
 #estado-usuario {
-    font-size: 13px;        /* más pequeño */
-    color: #555;            /* gris suave */
+    font-size: 13px;
+    color: #555;
     text-align: center;
     margin: 10px 0 20px;
 }
 
 #estado-usuario button {
-    font-size: 12px;        /* el texto del botón también pequeño */
-    padding: 4px 10px;      /* que no parezca un botón gigante */
+    font-size: 12px;
+    padding: 4px 10px;
     margin-left: 8px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-logout {
+    background: #d9534f;
+    color: white;
+}
+
+.btn-logout:hover {
+    background: #c9302c;
 }
