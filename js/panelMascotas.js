@@ -1,95 +1,197 @@
 (function () {
 
   const LLAVE_SESION = "demo_sesion";
-  const LLAVE_USUARIOS = "demo_usuarios";
-  const LLAVE_MASCOTAS = "demo_mascotas";   // <-- NUEVA CLAVE
+  const LLAVE_MASCOTAS = "demo_mascotas";
 
   // =============================
-  // ⚡ FUNCIONES DE MASCOTAS
+  // ⚡ UTILIDADES LOCALSTORAGE
   // =============================
 
-  // Obtener mascotas guardadas
   function obtenerMascotas() {
-    const raw = localStorage.getItem(LLAVE_MASCOTAS);
-    if (!raw) return [];
-    try { return JSON.parse(raw); } catch { return []; }
+    try {
+      return JSON.parse(localStorage.getItem(LLAVE_MASCOTAS)) || [];
+    } catch {
+      return [];
+    }
   }
 
-  // Guardar todas las mascotas
   function guardarMascotas(lista) {
     localStorage.setItem(LLAVE_MASCOTAS, JSON.stringify(lista));
   }
 
-  // Crear el HTML de una card
-  function mascotaCardHTML(m) {
+  // =============================
+  // ⚡ HTML DE UNA CARD DE MASCOTA
+  // =============================
+
+  function crearCardMascota(m, index) {
     return `
-      <div class="col-md-3">
-        <div class="pet-card p-3 shadow-sm">
-          <img src="${m.img}" class="pet-img mx-auto d-block">
-          <h5 class="text-center fw-bold mt-2">${m.nombre}</h5>
+      <div class="col-md-3"> 
+        <div class="pet-card p-3 shadow-sm"> 
+        <img src="${m.img}" class="pet-img mx-auto d-block"> 
+        <h5 class="text-center fw-bold mt-2">${m.nombre}</h5> 
+        <div class="pet-info row text-center mt-2"> 
+          <div class="col">${m.animal}</div> 
+          <div class="col">${m.raza}</div> 
+          <div class="col">${m.edad}</div> 
+        </div>
 
-          <div class="pet-info row text-center mt-2">
-            <div class="col">${m.animal}</div>
-            <div class="col">${m.raza}</div>
-            <div class="col">${m.edad}</div>
-          </div>
+        <hr> 
+        <button class="btn w-100 mt-2" 
+        style="background-color: #2badb6; color: azure;"
+        onclick="abrirDetallesMascota(${index})"> Ver detalles </button>
 
-          <hr>
-          <button class="btn w-100 mt-2" 
-                  style="background-color: #2badb6; color: azure;">
-            Ver detalles
-          </button>
         </div>
       </div>
     `;
   }
 
+  // =============================
+  // ⚡ CARGAR LISTA DE MASCOTAS
+  // =============================
+
+  function mostrarListaMascotas() {
+    const lista = document.getElementById("lista-mascotas");
+    const mascotas = obtenerMascotas();
+
+    lista.innerHTML = "";
+
+    if (mascotas.length === 0) {
+      lista.innerHTML = `
+        <p class="text-center text-muted fs-5 my-5">
+          Aún no has registrado mascotas 🐾
+        </p>
+      `;
+      return;
+    }
+
+    mascotas.forEach((m, index) => {
+      lista.innerHTML += crearCardMascota(m, index);
+    });
+  }
 
   // =============================
-  // ⚡ LÓGICA PRINCIPAL
+  // ⚡ MODAL DE DETALLES
+  // =============================
+
+  let mascotaActual = null;
+
+  window.abrirDetallesMascota = function (index) {
+    const mascotas = obtenerMascotas();
+    mascotaActual = index;
+    const m = mascotas[index];
+
+    document.getElementById("detalle-img").src = m.img;
+    document.getElementById("detalle-img-input").value = m.img;
+    document.getElementById("detalle-nombre").value = m.nombre;
+    document.getElementById("detalle-animal").value = m.animal;
+    document.getElementById("detalle-raza").value = m.raza;
+    document.getElementById("detalle-edad").value = m.edad;
+
+    mostrarHistorial(m.historial || []);
+
+    new bootstrap.Modal(document.getElementById("modalDetallesMascota")).show();
+  }
+
+  function mostrarHistorial(historial) {
+    const cont = document.getElementById("detalle-historial");
+    cont.innerHTML = "";
+
+    if (!historial || historial.length === 0) {
+      cont.innerHTML = `<p class="text-muted text-center">Sin historial médico.</p>`;
+      return;
+    }
+
+    historial.forEach((h, idx) => {
+      cont.innerHTML += `
+      <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+        <span>• ${h}</span>
+        <button class="btn btn-sm btn-outline-danger" onclick="borrarHistorial(${idx})">
+          ✖
+        </button>
+      </div>
+    `;
+    });
+  }
+
+  // =============================
+  // ⚡ GUARDAR CAMBIOS EN DETALLES
+  // =============================
+
+  document.getElementById("btn-guardar-detalles").addEventListener("click", () => {
+    const mascotas = obtenerMascotas();
+    const m = mascotas[mascotaActual];
+
+    m.nombre = document.getElementById("detalle-nombre").value;
+    m.animal = document.getElementById("detalle-animal").value;
+    m.raza = document.getElementById("detalle-raza").value;
+    m.edad = document.getElementById("detalle-edad").value;
+    m.img = document.getElementById("detalle-img-input").value;
+
+    guardarMascotas(mascotas);
+    mostrarListaMascotas();
+  });
+
+
+  document.getElementById("btn-borrar-mascota").addEventListener("click", () => {
+    if (mascotaActual === null) return;
+
+    const mascotas = obtenerMascotas();
+
+    // Confirmación (opcional)
+    if (!confirm("¿Seguro que quieres borrar esta mascota?")) return;
+
+    // Eliminar mascota por índice
+    mascotas.splice(mascotaActual, 1);
+
+    guardarMascotas(mascotas);
+    mostrarListaMascotas();
+
+    mascotaActual = null;
+
+    // Cerrar modal
+    bootstrap.Modal.getInstance(
+      document.getElementById("modalDetallesMascota")
+    ).hide();
+  });
+
+
+  // =============================
+  // ⚡ AGREGAR HISTORIAL
+  // =============================
+
+  document.getElementById("btn-agregar-historial").addEventListener("click", () => {
+    const texto = document.getElementById("detalle-historial-nuevo").value.trim();
+    if (!texto) return;
+
+    const mascotas = obtenerMascotas();
+    const m = mascotas[mascotaActual];
+
+    if (!m.historial) m.historial = [];
+    m.historial.push(texto);
+
+    guardarMascotas(mascotas);
+    mostrarHistorial(m.historial);
+
+    document.getElementById("detalle-historial-nuevo").value = "";
+  });
+
+  // =============================
+  // ⚡ INICIALIZAR PÁGINA
   // =============================
 
   function init() {
-
-    // --------------------------------------
-    // 1. VERIFICAR SESIÓN
-    // --------------------------------------
-    const sesionRaw = sessionStorage.getItem(LLAVE_SESION);
-    if (!sesionRaw) {
+    // Validar sesión
+    const rawSesion = sessionStorage.getItem(LLAVE_SESION);
+    if (!rawSesion) {
       location.replace("index.html");
       return;
     }
 
-    let sesion;
-    try { sesion = JSON.parse(sesionRaw); }
-    catch {
-      sessionStorage.removeItem(LLAVE_SESION);
-      location.replace("index.html");
-      return;
-    }
+    // Mostrar mascotas guardadas
+    mostrarListaMascotas();
 
-    const username = sesion.username || "usuario";
-    document.getElementById("usuario-nombre").textContent = username;
-
-
-    // --------------------------------------
-    // 2. MOSTRAR MASCOTAS GUARDADAS
-    // --------------------------------------
-    const listaMascotas = document.getElementById("lista-mascotas");
-    const mascotasGuardadas = obtenerMascotas();
-
-    mascotasGuardadas.forEach(m => {
-      listaMascotas.insertAdjacentHTML("beforeend", mascotaCardHTML(m));
-    });
-
-
-    // --------------------------------------
-    // 3. AGREGAR MASCOTAS NUEVAS
-    // --------------------------------------
-    const btnGuardar = document.getElementById("btn-guardar-mascota");
-
-    btnGuardar.addEventListener("click", () => {
-
+    // Botón guardar nueva mascota
+    document.getElementById("btn-guardar-mascota").addEventListener("click", () => {
       const nombre = document.getElementById("mascota-nombre").value.trim();
       const animal = document.getElementById("mascota-animal").value.trim();
       const raza = document.getElementById("mascota-raza").value.trim();
@@ -101,28 +203,37 @@
         return;
       }
 
-      const mascotaNueva = { nombre, animal, raza, edad, img };
+      const mascota = { nombre, animal, raza, edad, img, historial: [] };
 
-      // Guardar en localStorage
-      mascotasGuardadas.push(mascotaNueva);
-      guardarMascotas(mascotasGuardadas);
+      const mascotas = obtenerMascotas();
+      mascotas.push(mascota);
+      guardarMascotas(mascotas);
 
-      // Pintar en pantalla
-      listaMascotas.insertAdjacentHTML("beforeend", mascotaCardHTML(mascotaNueva));
+      mostrarListaMascotas();
 
-      // Limpiar campos
+      // Limpiar
       document.getElementById("mascota-nombre").value = "";
       document.getElementById("mascota-animal").value = "";
       document.getElementById("mascota-raza").value = "";
       document.getElementById("mascota-edad").value = "";
       document.getElementById("mascota-img").value = "";
 
-      // Cerrar modal
-      const modal = bootstrap.Modal.getInstance(document.getElementById("modalAgregarMascota"));
-      modal.hide();
+      bootstrap.Modal.getInstance(document.getElementById("modalAgregarMascota")).hide();
     });
-
   }
+
+  window.borrarHistorial = function (idx) {
+    const mascotas = obtenerMascotas();
+    const m = mascotas[mascotaActual];
+
+    if (!m.historial) return;
+
+    m.historial.splice(idx, 1);
+
+    guardarMascotas(mascotas);
+    mostrarHistorial(m.historial);
+  };
+
 
   document.addEventListener("DOMContentLoaded", init);
 
