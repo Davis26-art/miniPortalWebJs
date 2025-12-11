@@ -237,7 +237,7 @@ function mostrarEstadoUsuario() {
   try {
     const obj = JSON.parse(sesion);
     // Mostramos nombre y un botón pequeño para logout
-    cont.innerHTML = `<p>Sesión iniciada como <strong>${obj.username}</strong>. <button id="btn-logout-mini" class="btn btn-outline">Cerrar sesión</button></p>`;
+    cont.innerHTML = `<p>Sesión iniciada como <strong>${obj.username}</strong>.<button id="btn-logout-mini" class="btn-logout">Cerrar sesión</button></p>`;
 
     // Asociamos evento al botón creado dinámicamente
     qs("#btn-logout-mini").addEventListener("click", () => {

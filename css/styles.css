@@ -381,3 +381,31 @@ footer {
     display: block;
 }
 
+.btn-logout {
+    background: #d9534f;       /* rojo suave */
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: bold;
+    transition: background .2s ease;
+}
+
+.btn-logout:hover {
+    background: #c9302c;       /* rojo un poco más oscuro */
+}
+
+#estado-usuario {
+    font-size: 13px;        /* más pequeño */
+    color: #555;            /* gris suave */
+    text-align: center;
+    margin: 10px 0 20px;
+}
+
+#estado-usuario button {
+    font-size: 12px;        /* el texto del botón también pequeño */
+    padding: 4px 10px;      /* que no parezca un botón gigante */
+    margin-left: 8px;
+}
