@@ -1,176 +1,129 @@
-// --------------------------------------------------------------
-// js/panelMascotas.js
-// Archivo encargado de:
-//
-// 1. Revisar si el usuario tiene una sesión iniciada.
-// 2. Mostrar los datos del usuario en el panelMascotas.
-// 3. Permitir cerrar sesión.
-// 4. Permitir eliminar la cuenta del usuario.
-// --------------------------------------------------------------
-
-
-// Todo este archivo está envuelto en una función que se ejecuta sola.
-// Esto se usa para que las variables NO se mezclen con otras partes del sitio.
 (function () {
 
-  // Nombre de las claves donde guardamos información en localStorage/sessionStorage
-  // Puedes pensar en esto como "los rótulos de las cajas" donde guardamos datos.
-  const LLAVE_SESION = "demo_sesion";      // Aquí se guarda la sesión actual (solo mientras el navegador está abierto)
-  const LLAVE_USUARIOS = "demo_usuarios";  // Aquí se guardan las cuentas registradas
+  const LLAVE_SESION = "demo_sesion";
+  const LLAVE_USUARIOS = "demo_usuarios";
+  const LLAVE_MASCOTAS = "demo_mascotas";   // <-- NUEVA CLAVE
 
+  // =============================
+  // ⚡ FUNCIONES DE MASCOTAS
+  // =============================
 
-  // --------------------------------------------------------------
-  // Función que envía al usuario al inicio (index.html)
-  // --------------------------------------------------------------
-  function redirectToIndex() {
-    // location.replace() cambia de página SIN dejar que el usuario vuelva atrás
-    // Esto evita que el usuario regrese al panelMascotas después de cerrar la sesión.
-    location.replace("index.html");
+  // Obtener mascotas guardadas
+  function obtenerMascotas() {
+    const raw = localStorage.getItem(LLAVE_MASCOTAS);
+    if (!raw) return [];
+    try { return JSON.parse(raw); } catch { return []; }
+  }
+
+  // Guardar todas las mascotas
+  function guardarMascotas(lista) {
+    localStorage.setItem(LLAVE_MASCOTAS, JSON.stringify(lista));
+  }
+
+  // Crear el HTML de una card
+  function mascotaCardHTML(m) {
+    return `
+      <div class="col-md-3">
+        <div class="pet-card p-3 shadow-sm">
+          <img src="${m.img}" class="pet-img mx-auto d-block">
+          <h5 class="text-center fw-bold mt-2">${m.nombre}</h5>
+
+          <div class="pet-info row text-center mt-2">
+            <div class="col">${m.animal}</div>
+            <div class="col">${m.raza}</div>
+            <div class="col">${m.edad}</div>
+          </div>
+
+          <hr>
+          <button class="btn w-100 mt-2" 
+                  style="background-color: #2badb6; color: azure;">
+            Ver detalles
+          </button>
+        </div>
+      </div>
+    `;
   }
 
 
-  // --------------------------------------------------------------
-  // Función para obtener TODOS los usuarios guardados en localStorage
-  // Devuelve un array (lista) de usuarios o [] si no hay nada.
-  // --------------------------------------------------------------
-  function obtenerUsuarios() {
-    const raw = localStorage.getItem(LLAVE_USUARIOS); // Recuperamos lo que está guardado
+  // =============================
+  // ⚡ LÓGICA PRINCIPAL
+  // =============================
 
-    if (!raw) return []; // Si no hay nada guardado, regresamos una lista vacía []
-
-    try {
-      return JSON.parse(raw); // Convertimos el texto a un array de usuarios
-    } catch {
-      // Si algo sale mal, devolvemos una lista vacía
-      return [];
-    }
-  }
-
-
-  // --------------------------------------------------------------
-  // Guarda la lista de usuarios nuevamente en localStorage
-  // Recibe un array de usuarios como parámetro
-  // --------------------------------------------------------------
-  function guardarUsuarios(u) {
-    // JSON.stringify() convierte objetos/arrays a texto para poder guardarlos
-    localStorage.setItem(LLAVE_USUARIOS, JSON.stringify(u));
-  }
-
-
-  // --------------------------------------------------------------
-  // Elimina un usuario de la lista usando su ID
-  // --------------------------------------------------------------
-  function eliminarUsuarioPorId(userId) {
-    const usuarios = obtenerUsuarios(); // Traemos todos los usuarios
-    const filtrados = usuarios.filter((u) => u.id !== userId); // Quitamos el usuario que tenga ese ID
-    guardarUsuarios(filtrados); // Guardamos la lista actualizada
-  }
-
-
-  // --------------------------------------------------------------
-  // FUNCIÓN PRINCIPAL — Se ejecuta cuando el HTML ya está cargado
-  // --------------------------------------------------------------
   function init() {
 
-    // 1. Revisamos si existe una sesión guardada
+    // --------------------------------------
+    // 1. VERIFICAR SESIÓN
+    // --------------------------------------
     const sesionRaw = sessionStorage.getItem(LLAVE_SESION);
-
     if (!sesionRaw) {
-      // Si NO existe sesión, enviamos al usuario al inicio
-      redirectToIndex();
-      // Detenemos la función aqureturn; í
-    }
-
-
-    // 2. Intentamos convertir esa sesión a un objeto JS
-    let sesion;
-    try {
-      sesion = JSON.parse(sesionRaw);
-    } catch {
-      // Si la sesión está dañada o corrupta:
-      sessionStorage.removeItem(LLAVE_SESION); // La borramos
-      redirectToIndex(); // Y sacamos al usuario del panelMascotas
+      location.replace("index.html");
       return;
     }
 
+    let sesion;
+    try { sesion = JSON.parse(sesionRaw); }
+    catch {
+      sessionStorage.removeItem(LLAVE_SESION);
+      location.replace("index.html");
+      return;
+    }
 
-    // 3. Extraemos los datos básicos de la sesión
-    const userId = sesion.userId;
     const username = sesion.username || "usuario";
-
-    // Mostramos el nombre del usuario en el panelMascotas
     document.getElementById("usuario-nombre").textContent = username;
 
 
-    // 4. Buscamos el usuario completo en localStorage
-    const usuarios = obtenerUsuarios();
-    const usuarioObj = usuarios.find((u) => u.id === userId);
+    // --------------------------------------
+    // 2. MOSTRAR MASCOTAS GUARDADAS
+    // --------------------------------------
+    const listaMascotas = document.getElementById("lista-mascotas");
+    const mascotasGuardadas = obtenerMascotas();
 
-
-    // 5. Si encontramos el usuario, mostramos más datos
-    if (usuarioObj) {
-      const full = usuarioObj.fullName || usuarioObj.username || username;
-      const email = usuarioObj.email || "";
-
-      document.getElementById("usuario-nombre").textContent = full;
-      document.getElementById("info-privada").textContent =
-        "Este contenido sólo es visible para usuarios autenticados.";
-      document.getElementById("email-privado").textContent = "Email: " + email;
-
-    } else {
-      // Si NO encontramos ese usuario en localStorage, mostramos lo básico
-      document.getElementById("info-privada").textContent =
-        "Usuario autenticado (datos limitados). ID: " + (userId || "n/a");
-      document.getElementById("email-privado").textContent = "";
-    }
-
-
-    // --------------------------------------------------------------
-    // BOTÓN: Cerrar sesión
-    // Borra la sesión y envía al usuario al index
-    // --------------------------------------------------------------
-    document.getElementById("btn-logout").addEventListener("click", () => {
-      sessionStorage.removeItem(LLAVE_SESION); // Quitamos la sesión
-      redirectToIndex();
+    mascotasGuardadas.forEach(m => {
+      listaMascotas.insertAdjacentHTML("beforeend", mascotaCardHTML(m));
     });
 
 
-    // --------------------------------------------------------------
-    // BOTÓN: Eliminar cuenta
-    // Pregunta al usuario, borra la cuenta y destruye la sesión
-    // --------------------------------------------------------------
-    document.getElementById("btn-delete").addEventListener("click", () => {
+    // --------------------------------------
+    // 3. AGREGAR MASCOTAS NUEVAS
+    // --------------------------------------
+    const btnGuardar = document.getElementById("btn-guardar-mascota");
 
-      const confirmar = confirm(
-        "¿Estás seguro? Esto eliminará tu cuenta permanentemente."
-      );
+    btnGuardar.addEventListener("click", () => {
 
-      if (!confirmar) return; // Si cancela, no hacemos nada
+      const nombre = document.getElementById("mascota-nombre").value.trim();
+      const animal = document.getElementById("mascota-animal").value.trim();
+      const raza = document.getElementById("mascota-raza").value.trim();
+      const edad = document.getElementById("mascota-edad").value.trim();
+      const img = document.getElementById("mascota-img").value.trim();
 
-      if (userId) {
-        eliminarUsuarioPorId(userId); // Eliminamos al usuario
+      if (!nombre || !animal || !raza || !edad || !img) {
+        alert("Completa todos los campos");
+        return;
       }
 
-      sessionStorage.removeItem(LLAVE_SESION); // Quitamos la sesión
-      redirectToIndex(); // Lo mandamos al inicio
+      const mascotaNueva = { nombre, animal, raza, edad, img };
+
+      // Guardar en localStorage
+      mascotasGuardadas.push(mascotaNueva);
+      guardarMascotas(mascotasGuardadas);
+
+      // Pintar en pantalla
+      listaMascotas.insertAdjacentHTML("beforeend", mascotaCardHTML(mascotaNueva));
+
+      // Limpiar campos
+      document.getElementById("mascota-nombre").value = "";
+      document.getElementById("mascota-animal").value = "";
+      document.getElementById("mascota-raza").value = "";
+      document.getElementById("mascota-edad").value = "";
+      document.getElementById("mascota-img").value = "";
+
+      // Cerrar modal
+      const modal = bootstrap.Modal.getInstance(document.getElementById("modalAgregarMascota"));
+      modal.hide();
     });
-
-
-    // --------------------------------------------------------------
-    // BOTÓN: Volver al inicio SIN cerrar sesión
-    // (Esto es útil para pruebas)
-    // --------------------------------------------------------------
-    const btnVolver = document.getElementById("btn-volver");
-    if (btnVolver) {
-      btnVolver.addEventListener("click", () => location.href = "index.html");
-    }
 
   }
 
-
-  // --------------------------------------------------------------
-  // Ejecutamos "init" cuando el HTML ya terminó de cargarse
-  // --------------------------------------------------------------
   document.addEventListener("DOMContentLoaded", init);
 
-})(); // Fin del auto-ejecutable
+})();
